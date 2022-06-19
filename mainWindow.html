@@ -25,6 +25,19 @@
     <script type="text/javascript">
         window.addEventListener("load", function () {
 
+            const downloadBtn = document.getElementById('downloadBtn');
+            const copyBtn = document.getElementById('copyBtn');
+
+            downloadBtn.onclick = (e) => {
+                var base64Data = window.instance.toDataURL().replace(/^data:image\/png;base64,/, "");
+                electron.saveFile(base64Data);
+            }
+
+            copyBtn.onclick = e => {
+                var base64Data = window.instance.toDataURL();
+                electron.copyImage(base64Data);
+            }
+
             window.electron.onAsynchronousMessage(async (arg) => {
 
                 window.instance = new window.tui.ImageEditor(document.querySelector('#tui-image-editor'), {
@@ -63,8 +76,8 @@
 
     <div id="tui-image-editor"></div>
     <div class="action-buttons">
-        <button>Download</button>
-        <button>Copy to clipboard</button>
+        <button id="downloadBtn">Download</button>
+        <button id="copyBtn">Copy to clipboard</button>
     </div>
 </body>
 
