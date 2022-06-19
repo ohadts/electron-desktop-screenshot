@@ -1,0 +1,71 @@
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/v2.2.6/tui-color-picker.min.css" />
+    <script src="https://uicdn.toast.com/tui-color-picker/v2.2.6/tui-color-picker.min.js"></script>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.css" />
+    <script src="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.js"></script>
+
+    <style>
+        .tui-image-editor-header-logo {
+            display: none;
+        }
+
+        .tui-image-editor-header-buttons {
+            display: none;
+        }
+
+        .action-buttons {
+            position: fixed;
+            top: 10;
+            right: 10;
+        }
+    </style>
+    <script type="text/javascript">
+        window.addEventListener("load", function () {
+
+            window.electron.onAsynchronousMessage(async (arg) => {
+
+                window.instance = new window.tui.ImageEditor(document.querySelector('#tui-image-editor'), {
+                    includeUI: {
+                        loadImage: {
+                            path: arg,
+                            name: 'screen capture'
+                        },
+                        menu: ['shape', 'text', 'draw', 'crop'],
+                        uiSize: {
+                            width: '1620px',
+                            height: '1020px',
+                        },
+                        initMenu: 'draw',
+                        menuBarPosition: 'bottom',
+                    },
+                    cssMaxWidth: 1620,
+                    cssMaxHeight: 1020,
+                    selectionStyle: {
+                        cornerSize: 20,
+                        rotatingPointOffset: 70,
+                    },
+                });
+
+            })
+            // const buttonEl = document.getElementsByTagName('button');
+            // buttonEl[0].addEventListener('click', (event)=>{
+            //     window.electron.send("asynchronous-message", "PING");
+            // })
+        })
+
+    </script>
+</head>
+
+<body>
+
+    <div id="tui-image-editor"></div>
+    <div class="action-buttons">
+        <button>Download</button>
+        <button>Copy to clipboard</button>
+    </div>
+</body>
+
+</html>
